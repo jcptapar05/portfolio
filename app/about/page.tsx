@@ -1,18 +1,14 @@
 import React from "react";
 
-type pageType = {
- name?: string;
-};
-
-const page: React.FC<pageType> = ({ name }) => {
+const page = () => {
  return (
   <div className="w-screen h-[87vh] flex justify-center items-center">
    <div className="max-w-[800px] px-6 md:px-0">
     <h2 className="capitalize text-2xl font-bold">About me</h2>
     <p className="tracking-wider	">
      My name is
-     <i> Julius Tapar.</i> I'm from Philippines. Associate Graduated in Computer
-     Science.
+     <i> Julius Tapar.</i> I&apos;m from Philippines. Associate Graduated in
+     Computer Science.
     </p>
     <p className="mt-2 tracking-wider">
      I am an experienced frontend developer with expertise in React.js, Next.js,
