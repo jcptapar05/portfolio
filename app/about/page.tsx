@@ -12,8 +12,8 @@ const page = () => {
     </p>
     <p className="mt-2 tracking-wider">
      I am an experienced frontend developer with expertise in React.js, Next.js,
-     Vue.js, Express.js, Laravel, MySQL, Prisma, Redux Toolkit, Zustand, Shadcn,
-     and various CSS frameworks.
+     Vue.js, Express.js, MySQL, Prisma, Redux Toolkit, Zustand, Shadcn, and
+     various CSS frameworks.
     </p>
     <p className="mt-2 tracking-wider">
      I am keen on learning WebRTC and blockchain technology.
