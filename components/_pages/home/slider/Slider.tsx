@@ -16,7 +16,7 @@ const Slider = () => {
       alt=""
      />
     </div>
-    <h1 className="text-4xl mb-4 uppercase font-semibold">Julius Tapar</h1>
+    <h1 className="text-4xl mb-4 capitalize font-semibold">Julius Tapar</h1>
     <p className="text-lg">
      Frontend, Full-stack MERN and NextJs
     </p>
