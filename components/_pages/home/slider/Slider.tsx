@@ -18,7 +18,7 @@ const Slider = () => {
     </div>
     <h1 className="text-4xl mb-4 uppercase font-semibold">Julius Tapar</h1>
     <p className="text-lg">
-     Frontend, Full-stack MERN, NextJs & Mobile Developer
+     Frontend, Full-stack MERN and NextJs
     </p>
     <div className="flex text-center gap-5 mt-4 justify-center">
      <a
