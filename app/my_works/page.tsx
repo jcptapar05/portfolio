@@ -4,6 +4,31 @@ import React from "react";
 const page = () => {
   const data = [
     {
+      img: "./hris.png",
+      lang: ["Vue", "MySQL", "Golang"],
+      url: "https://hris.cda.gov.ph/login",
+    },
+    {
+      img: "./shopify-liquid-1.png",
+      lang: ["Shopify", "Liquid"],
+      url: "https://quickstart-220e7d16.myshopify.com/",
+    },
+    {
+      img: "./shopify-liquid-2.png",
+      lang: ["Shopify", "Liquid"],
+      url: "https://brandy-1604017349.myshopify.com/",
+    },
+    {
+      img: "./shopify1.png",
+      lang: ["NextJs", "Shopify"],
+      url: "https://headlessshopifynext.vercel.app/",
+    },
+    {
+      img: "./shopify2.png",
+      lang: ["NextJs", "Shopify"],
+      url: "https://ccooffee-eight.vercel.app/",
+    },
+    {
       img: "./pokemon.PNG",
       lang: ["NextJs"],
       url: "https://pokemonapp-dusky.vercel.app/",
@@ -58,7 +83,12 @@ const page = () => {
   return (
     <div className="container py-10 gap-4 grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
       {data.map((item, i) => (
-        <Cards key={i} img={item.img} lang={item.lang} url={item.url}></Cards>
+        <Cards
+          key={i}
+          img={item.img}
+          lang={item.lang}
+          url={item.url}
+        ></Cards>
       ))}
     </div>
   );
