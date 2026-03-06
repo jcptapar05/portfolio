@@ -18,10 +18,42 @@ type ChatMessage = {
   content: string;
 };
 
-function isValidMessages(messages: any): messages is ChatMessage[] {
+type RequestBody = {
+  messages: ChatMessage[];
+  model?: string;
+  fallbackModels?: string[];
+};
+
+function isValidMessages(messages: unknown): messages is ChatMessage[] {
   return (
     Array.isArray(messages) &&
-    messages.every((m) => (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
+    messages.every(
+      (m) =>
+        typeof m === "object" &&
+        m !== null &&
+        "role" in m &&
+        "content" in m &&
+        ((m as ChatMessage).role === "user" || (m as ChatMessage).role === "assistant") &&
+        typeof (m as ChatMessage).content === "string",
+    )
+  );
+}
+
+function isValidModelList(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((item) => typeof item === "string" && item.trim().length > 0);
+}
+
+function isRetryableQuotaError(error: unknown): boolean {
+  const message = String(
+    (error as { message?: string })?.message ?? (error as { statusText?: string })?.statusText ?? error,
+  ).toLowerCase();
+
+  return (
+    message.includes("quota") ||
+    message.includes("rate limit") ||
+    message.includes("resource_exhausted") ||
+    message.includes("too many requests") ||
+    message.includes("429")
   );
 }
 
@@ -85,32 +117,32 @@ Canva
 
 Experience:
 
-Junior System Developer  
-Cooperative Development Authority  
-Jan 2025 – Dec 2025  
+Junior System Developer
+Cooperative Development Authority
+Jan 2025 – Dec 2025
 - Developed internal systems such as HRIS and IMS
 - Built applications using Vue.js, Next.js, TypeScript, and Golang (Fiber)
 - Managed deployments with Docker
 - Provided software and hardware support
 
-Software Engineer (Freelance)  
-Cognith  
-Aug 2024 – Oct 2024  
+Software Engineer (Freelance)
+Cognith
+Aug 2024 – Oct 2024
 - Maintained React and TypeScript applications
 - Improved UI and fixed bugs
 - Implemented unit tests with Jest and Enzyme
 - Worked with cross-functional teams
 
-Frontend Developer (Freelance)  
-Genius Education  
-Apr 2024 – May 2024  
+Frontend Developer (Freelance)
+Genius Education
+Apr 2024 – May 2024
 - Fixed UI issues
 - Improved performance
 - Built features using Vue and Vuex
 
-Web Developer (Freelance)  
-1 Click Design  
-Jun 2023 – Apr 2024  
+Web Developer (Freelance)
+1 Click Design
+Jun 2023 – Apr 2024
 - Built applications using Next.js, TypeScript, and MySQL
 - Deployed applications on AWS EC2
 - Used AWS S3 for file storage
@@ -118,23 +150,23 @@ Jun 2023 – Apr 2024
 - Built real-time features using WebRTC and Socket.io
 - Implemented text-to-speech features
 
-Assistant Software & Web Developer  
-SSA Consulting Group Inc.  
-2022 – 2023  
+Assistant Software & Web Developer
+SSA Consulting Group Inc.
+2022 – 2023
 - Developed and maintained websites using WordPress, Vue.js, and Laravel
 - Improved SEO and performance
 - Collaborated using Slack and Asana
 
-Web Developer  
-Online Thinkers Technology  
-2019 – 2021  
+Web Developer
+Online Thinkers Technology
+2019 – 2021
 - Developed websites using WordPress and Joomla
 - Performed SEO optimization
 - Maintained client websites
 
 Education:
-Computer Science  
-Immaculate Conception International  
+Computer Science
+Immaculate Conception International
 2010 – 2012
 
 =====================
@@ -160,8 +192,11 @@ If someone wants to contact Julius, recommend:
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const body = (await req.json()) as RequestBody;
+
     const messages = body?.messages;
+    const requestedModel = typeof body?.model === "string" ? body.model.trim() : "";
+    const fallbackModels = isValidModelList(body?.fallbackModels) ? body.fallbackModels : [];
 
     if (!isValidMessages(messages)) {
       return NextResponse.json({ reply: "Invalid request format." }, { status: 400 });
@@ -172,17 +207,47 @@ export async function POST(req: NextRequest) {
       parts: [{ text: m.content }],
     }));
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      config: {
-        systemInstruction: ME_CONTEXT,
-      },
-      contents,
-    });
+    const defaultModel = "gemini-2.5-flash";
 
-    return NextResponse.json({
-      reply: response.text ?? "Sorry, I couldn't generate a response.",
-    });
+    const modelsToTry = [
+      requestedModel || defaultModel,
+      ...fallbackModels.filter((m) => m !== requestedModel && m !== defaultModel),
+    ];
+
+    let lastError: unknown = null;
+
+    for (const model of modelsToTry) {
+      try {
+        const response = await ai.models.generateContent({
+          model,
+          config: {
+            systemInstruction: ME_CONTEXT,
+          },
+          contents,
+        });
+
+        return NextResponse.json({
+          reply: response.text ?? "Sorry, I couldn't generate a response.",
+          usedModel: model,
+        });
+      } catch (error) {
+        lastError = error;
+
+        if (!isRetryableQuotaError(error)) {
+          console.error(`Model ${model} failed with non-retryable error:`, error);
+          return NextResponse.json({ reply: "Sorry—something went wrong." }, { status: 500 });
+        }
+
+        console.warn(`Model ${model} hit quota/rate limit. Trying next fallback model...`);
+      }
+    }
+
+    console.error("All configured Gemini models failed:", lastError);
+
+    return NextResponse.json(
+      { reply: "All Gemini models are currently unavailable or have reached their limits. Please try again later." },
+      { status: 429 },
+    );
   } catch (error) {
     console.error(error);
 
