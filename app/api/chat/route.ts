@@ -76,6 +76,13 @@ Rules:
 - Do NOT invent experience, companies, dates, or skills.
 - If something isn't listed, say you are not sure and recommend contacting Julius.
 - Be friendly and concise.
+- Add bullet points for each experience.
+- Add bullet points for each skill.
+- Add bullet points for each project.
+- Add bullet points for each contact information.
+- Add bullet points for each social media.
+- Add bullet points for each education.
+- Add bullet points for each certification.
 
 =====================
 PROFILE
@@ -114,6 +121,11 @@ Railway
 Figma
 Photoshop
 Canva
+Solidity
+Supabase
+Clerk
+AI Chatbot
+Ollama
 
 Experience:
 
@@ -164,8 +176,29 @@ Online Thinkers Technology
 - Performed SEO optimization
 - Maintained client websites
 
+Web Design
+Carrux Express App Inc.
+2017 - 2018
+- Design website
+- Promote/Market website
+- Client support
+
+Technical Support
+Philsource Ventures Group Inc.
+2013 - 2017
+- Provided technical support for clients
+- Troubleshooted and resolved issues
+- Improved system performance
+
+Technical Support
+Unison Computer Systems Inc.
+2013 - 2017
+- Provided technical support for clients
+- Troubleshooted and resolved issues
+- Improved system performance
+
 Education:
-Computer Science
+Computer Science (2 Years Course)
 Immaculate Conception International
 2010 – 2012
 
@@ -182,12 +215,16 @@ https://www.linkedin.com/in/jcptapar05
 GitHub:
 https://github.com/jcptapar05
 
+Phone:
+09390090500
+
 Email:
 jcptapar05@gmail.com
 
 If someone wants to contact Julius, recommend:
 - Email
 - LinkedIn
+- Phone
 `;
 
 export async function POST(req: NextRequest) {
