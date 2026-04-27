@@ -1,76 +1,198 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71.4% 4.1%;
+    /* Shadcn base tokens */
+    --background: 0 0% 99%;
+    --foreground: 220 15% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
- 
+    --card-foreground: 220 15% 12%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
- 
-    --primary: 220.9 39.3% 11%;
-    --primary-foreground: 210 20% 98%;
- 
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
- 
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
- 
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220.9 39.3% 11%;
- 
+    --popover-foreground: 220 15% 12%;
+
+    --primary: 220 15% 12%;
+    --primary-foreground: 0 0% 99%;
+
+    --secondary: 220 13% 95%;
+    --secondary-foreground: 220 15% 12%;
+
+    --muted: 220 13% 95%;
+    --muted-foreground: 220 8% 50%;
+
+    --accent: 220 13% 95%;
+    --accent-foreground: 220 15% 12%;
+
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
+    --destructive-foreground: 0 0% 98%;
 
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 224 71.4% 4.1%;
- 
+    --ring: 220 15% 12%;
+
     --radius: 0.5rem;
+
+    /* Custom design tokens */
+    --highlight: 163 72% 37%;
+    --highlight-rgb: 27, 163, 120;
+    --surface: 0 0% 97%;
+    --surface-border: 220 13% 88%;
   }
- 
+
   .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
- 
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
- 
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 210 20% 98%;
- 
-    --primary: 210 20% 98%;
-    --primary-foreground: 220.9 39.3% 11%;
- 
-    --secondary: 215 27.9% 16.9%;
-    --secondary-foreground: 210 20% 98%;
- 
-    --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
- 
-    --accent: 215 27.9% 16.9%;
-    --accent-foreground: 210 20% 98%;
- 
+    --background: 222 22% 8%;
+    --foreground: 210 17% 93%;
+
+    --card: 222 20% 10%;
+    --card-foreground: 210 17% 93%;
+
+    --popover: 222 20% 10%;
+    --popover-foreground: 210 17% 93%;
+
+    --primary: 210 17% 93%;
+    --primary-foreground: 222 22% 8%;
+
+    --secondary: 222 20% 14%;
+    --secondary-foreground: 210 17% 93%;
+
+    --muted: 222 20% 14%;
+    --muted-foreground: 220 9% 52%;
+
+    --accent: 222 20% 14%;
+    --accent-foreground: 210 17% 93%;
+
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 98%;
- 
-    --border: 215 27.9% 16.9%;
-    --input: 215 27.9% 16.9%;
-    --ring: 216 12.2% 83.9%;
+    --destructive-foreground: 210 17% 93%;
+
+    --border: 222 18% 18%;
+    --input: 222 18% 18%;
+    --ring: 213 27% 80%;
+
+    /* Custom design tokens */
+    --highlight: 163 72% 42%;
+    --highlight-rgb: 36, 191, 140;
+    --surface: 222 20% 12%;
+    --surface-border: 222 18% 20%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Clean selection color */
+  ::selection {
+    background-color: hsl(var(--highlight) / 0.2);
+    color: hsl(var(--foreground));
+  }
+
+  /* Focus ring */
+  :focus-visible {
+    outline: 2px solid hsl(var(--highlight));
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+/* ----------------------------------------
+   Scroll-triggered fade-in animation
+   ---------------------------------------- */
+@layer utilities {
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fade-in {
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+  }
+
+  /* Staggered delay utilities */
+  .delay-100 { transition-delay: 100ms; }
+  .delay-200 { transition-delay: 200ms; }
+  .delay-300 { transition-delay: 300ms; }
+  .delay-400 { transition-delay: 400ms; }
+  .delay-500 { transition-delay: 500ms; }
+
+  /* Highlight / accent color helpers */
+  .text-highlight {
+    color: hsl(var(--highlight));
+  }
+
+  .border-highlight {
+    border-color: hsl(var(--highlight));
+  }
+
+  .bg-highlight {
+    background-color: hsl(var(--highlight));
+  }
+
+  /* Subtle dot-grid background */
+  .dot-grid {
+    background-image: radial-gradient(
+      circle,
+      hsl(var(--foreground) / 0.06) 1px,
+      transparent 1px
+    );
+    background-size: 28px 28px;
+  }
+}
+
+/* ----------------------------------------
+   Smooth icon hover lift
+   ---------------------------------------- */
+@layer components {
+  .icon-link {
+    @apply transition-all duration-200 ease-out;
+    color: hsl(var(--muted-foreground));
+  }
+  .icon-link:hover {
+    color: hsl(var(--highlight));
+    transform: translateY(-2px);
+  }
+
+  /* Underline-grow link effect */
+  .link-underline {
+    position: relative;
+    text-decoration: none;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: hsl(var(--highlight));
+    transition: width 0.25s ease;
+  }
+  .link-underline:hover::after {
+    width: 100%;
   }
 }
