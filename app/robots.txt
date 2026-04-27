@@ -1,0 +1,12 @@
+# robots.txt for www.juliustapar.com
+
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /my_works
+
+# Block Next.js internals and build assets
+Disallow: /_next/
+Disallow: /api/
+
+Sitemap: https://www.juliustapar.com/sitemap.xml
