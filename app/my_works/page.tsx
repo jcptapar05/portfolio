@@ -17,6 +17,12 @@ interface Project {
 
 const data: Project[] = [
   {
+    img: "./bsnft.PNG",
+    lang: ["Next.js", "Typescript", "Tailwind", "Ethers.js","Hardhat"],
+    url: "https://activities-69jz.vercel.app/marketplace",
+    title: "Bookstore NFT",
+  },
+  {
     img: "./hris.png",
     lang: ["Vue", "MySQL", "Golang"],
     url: "https://hris.cda.gov.ph/login",
