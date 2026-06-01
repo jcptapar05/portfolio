@@ -68,14 +68,12 @@ const Slider = () => {
 
         {/* Role line */}
         <p className="fade-up text-highlight text-sm sm:text-base font-medium uppercase tracking-widest mb-5">
-          Frontend &amp; Full-Stack Developer
+          Full-Stack Developer (Heavy Frontend)
         </p>
 
         {/* Bio */}
         <p className="fade-up text-muted-foreground text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
-          Specializing in React, Next.js, and MERN. Building scalable web
-          applications, real-time systems with WebRTC &amp; Agora, and
-          exploring Go backend services and Solidity smart contracts.
+          Specializing in React, Next.js, MERN, WordPress, and Shopify. Building scalable web applications and AI-driven automation workflows using n8n, Zapier, and GoHighLevel (GHL), while exploring Go backend services and Solidity smart contracts.
         </p>
 
         {/* Social icons */}
