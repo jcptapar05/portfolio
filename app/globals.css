@@ -109,14 +109,11 @@
   }
 }
 
-/* ----------------------------------------
-   Scroll-triggered fade-in animation
-   ---------------------------------------- */
 @layer utilities {
   .fade-up {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(24px);
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .fade-up.visible {
@@ -126,7 +123,7 @@
 
   .fade-in {
     opacity: 0;
-    transition: opacity 0.7s ease;
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .fade-in.visible {
@@ -139,6 +136,9 @@
   .delay-300 { transition-delay: 300ms; }
   .delay-400 { transition-delay: 400ms; }
   .delay-500 { transition-delay: 500ms; }
+  .delay-600 { transition-delay: 600ms; }
+  .delay-700 { transition-delay: 700ms; }
+  .delay-800 { transition-delay: 800ms; }
 
   /* Highlight / accent color helpers */
   .text-highlight {
@@ -161,6 +161,19 @@
       transparent 1px
     );
     background-size: 28px 28px;
+  }
+
+  /* Glow effect */
+  .glow-highlight {
+    box-shadow: 0 0 20px hsl(var(--highlight) / 0.3), 0 0 60px hsl(var(--highlight) / 0.1);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--highlight)), hsl(180 60% 50%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
 
@@ -195,4 +208,106 @@
   .link-underline:hover::after {
     width: 100%;
   }
+}
+
+/* ----------------------------------------
+   Infinite marquee / skill carousel
+   ---------------------------------------- */
+@keyframes marquee-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.marquee-left {
+  animation: marquee-left 30s linear infinite;
+}
+
+.marquee-right {
+  animation: marquee-right 25s linear infinite;
+}
+
+.marquee-left:hover,
+.marquee-right:hover {
+  animation-play-state: paused;
+}
+
+/* ----------------------------------------
+   Orbit ring animation (skills orb)
+   ---------------------------------------- */
+@keyframes orbit {
+  0%   { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+}
+
+@keyframes orbit-reverse {
+  0%   { transform: rotate(0deg) translateX(160px) rotate(0deg); }
+  100% { transform: rotate(-360deg) translateX(160px) rotate(360deg); }
+}
+
+/* ----------------------------------------
+   Hero gradient pulse
+   ---------------------------------------- */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%       { opacity: 0.7; transform: scale(1.05); }
+}
+
+.hero-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* ----------------------------------------
+   Timeline connector line draw
+   ---------------------------------------- */
+@keyframes line-grow {
+  from { height: 0; }
+  to   { height: 100%; }
+}
+
+.timeline-line-animate {
+  animation: line-grow 1.2s ease forwards;
+}
+
+/* ----------------------------------------
+   Float animation for avatar
+   ---------------------------------------- */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+.float-anim {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ----------------------------------------
+   Skill tag shimmer
+   ---------------------------------------- */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.skill-badge-hover:hover {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--highlight) / 0.1) 25%,
+    hsl(var(--highlight) / 0.25) 50%,
+    hsl(var(--highlight) / 0.1) 75%
+  );
+  background-size: 200% auto;
+  animation: shimmer 1.5s linear infinite;
+  border-color: hsl(var(--highlight) / 0.4);
+  color: hsl(var(--highlight));
 }

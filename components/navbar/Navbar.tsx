@@ -8,9 +8,11 @@ import { ModeToggle } from "../ModeToggle";
 import { MenuIcon, XIcon } from "lucide-react";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/my_works", label: "My Works" },
+  { href: "/",           label: "Home" },
+  { href: "/about",      label: "About" },
+  { href: "/experience", label: "Experience" },
+  { href: "/my_works",   label: "Works" },
+  { href: "/#contact",   label: "Contact" },
 ];
 
 export function Navbar() {
@@ -48,25 +50,28 @@ export function Navbar() {
           className="text-lg font-bold tracking-tight text-foreground hover:text-highlight transition-colors duration-200"
           aria-label="Julius Tapar — Home"
         >
-          JT
+          <span className="gradient-text">JT</span>
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
+        <div className="hidden md:flex items-center gap-0.5">
+          {navLinks.map((link) => {
+            const linkPath = link.href.split("#")[0] || "/";
+            const isActive = pathname === linkPath;
+            return (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
                 "px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200",
-                pathname === link.href
+                isActive
                   ? "text-foreground"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
               {link.label}
             </Link>
-          ))}
+          )})}
           <div className="ml-2">
             <ModeToggle />
           </div>
@@ -96,25 +101,28 @@ export function Navbar() {
         id="mobile-menu"
         className={cn(
           "md:hidden border-b border-border bg-background/95 backdrop-blur-md overflow-hidden transition-all duration-300 ease-in-out",
-          menuOpen ? "max-h-48 opacity-100" : "max-h-0 opacity-0"
+          menuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
         )}
         aria-hidden={!menuOpen}
       >
         <div className="container mx-auto px-6 py-3 flex flex-col gap-1">
-          {navLinks.map((link) => (
+          {navLinks.map((link) => {
+            const linkPath = link.href.split("#")[0] || "/";
+            const isActive = pathname === linkPath;
+            return (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
                 "px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200",
-                pathname === link.href
+                isActive
                   ? "text-foreground bg-accent"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent"
               )}
             >
               {link.label}
             </Link>
-          ))}
+          )})}
         </div>
       </div>
     </header>

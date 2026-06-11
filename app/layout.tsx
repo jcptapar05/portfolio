@@ -5,6 +5,7 @@ import { Navbar } from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ChatWidget from "@/components/ChatWidget";
+import CanvasNodesBackground from "@/components/CanvasNodesBackground";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -18,38 +19,40 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.juliustapar.com"),
   title: {
-    default: "Julius Tapar — Frontend & Full-Stack Developer",
+    default: "Julius Tapar — Full-Stack Developer & AI Automation Specialist",
     template: "%s | Julius Tapar",
   },
   description:
-    "Julius Tapar is a Frontend and Full-Stack Developer from the Philippines specializing in React, Next.js, and MERN. Building scalable web applications, real-time systems, and exploring Go and Solidity.",
+    "Julius Tapar is a Full-Stack Developer & AI Automation Specialist from the Philippines specializing in Next.js, Golang, and automated workflows. Building scalable web systems and n8n integrations.",
   keywords: [
     "Julius Tapar",
-    "Frontend Developer",
     "Full-Stack Developer",
-    "React",
+    "AI Automation",
+    "n8n",
     "Next.js",
-    "MERN",
+    "React",
+    "Golang",
+    "TypeScript",
     "Philippines",
-    "Web Developer",
-    "Portfolio",
+    "Software Engineer",
   ],
   authors: [{ name: "Julius Tapar", url: "https://github.com/jcptapar05" }],
   creator: "Julius Tapar",
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: "Julius Tapar — Frontend & Full-Stack Developer",
+    title: "Julius Tapar — Full-Stack Developer & AI Automation Specialist",
     description:
-      "Frontend and Full-Stack Developer specializing in React, Next.js, MERN, real-time systems, and scalable web applications.",
+      "Full-Stack Developer & AI Automation Specialist specializing in React, Next.js, Golang, and enterprise workflows using n8n and Zapier.",
     siteName: "Julius Tapar Portfolio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Julius Tapar — Frontend & Full-Stack Developer",
+    title: "Julius Tapar — Full-Stack Developer & AI Automation Specialist",
     description:
-      "Frontend and Full-Stack Developer specializing in React, Next.js, MERN, real-time systems, and scalable web applications.",
+      "Full-Stack Developer & AI Automation Specialist specializing in React, Next.js, Golang, and enterprise workflows using n8n and Zapier.",
   },
   robots: {
     index: true,
@@ -75,6 +78,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <CanvasNodesBackground />
           <Navbar />
           <main>{children}</main>
           <Footer />
