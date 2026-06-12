@@ -6,6 +6,7 @@ import Footer from "@/components/footer/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ChatWidget from "@/components/ChatWidget";
 import CanvasNodesBackground from "@/components/CanvasNodesBackground";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({
   subsets: ["latin"],
@@ -89,6 +90,7 @@ export default function RootLayout({
           position="bottom-right"
         />
       </body>
+      <GoogleAnalytics gaId="G-J4YVYY8LXE" />
     </html>
   );
 }
