@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
+export const maxDuration = 60;
+
 function convertToISO8601(input: string): string {
   let clean = input.trim();
 
